@@ -1,5 +1,5 @@
 from django.db import models
-
+from .Utils import average
 
 class Product(models.Model):
     name = models.CharField(max_length=50)
