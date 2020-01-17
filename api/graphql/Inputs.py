@@ -1,6 +1,7 @@
 import graphene
 
-class productInput(graphene.InputObjectType):
+
+class ProductInput(graphene.InputObjectType):
     id = graphene.ID()
     name = graphene.String()
     description = graphene.String()
@@ -10,7 +11,7 @@ class productInput(graphene.InputObjectType):
     buying_price = graphene.Float()
 
 
-class collectionInput(graphene.InputObjectType):
+class CollectionInput(graphene.InputObjectType):
     id = graphene.ID()
     name = graphene.String()
-    products = graphene.List(productInput)
+    products = graphene.List(ProductInput)

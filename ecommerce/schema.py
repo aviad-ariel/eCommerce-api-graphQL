@@ -1,7 +1,14 @@
 import graphene
-import api.graphql.Query as graphql
+import api.graphql.Query as Queries
+import api.graphql.Mutations.Mutation as Mutations
 
-class Query(graphql.Query, graphene.ObjectType):
+
+class Query(Queries.Query, graphene.ObjectType):
     pass
 
-schema = graphene.Schema(query=Query)
+
+class Mutation(Mutations.Mutation, graphene.ObjectType):
+    pass
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
