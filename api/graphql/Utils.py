@@ -1,4 +1,4 @@
-def fetch(query, model):
+def fetch_by_id(query, model):
     try:
         fetched_data = model.objects.get(pk=query)
     except model.DoesNotExist:

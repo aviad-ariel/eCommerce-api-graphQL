@@ -1,17 +1,9 @@
+
+from .Utils import fetch_by_id
 import graphene
 from graphene_django.types import DjangoObjectType, ObjectType
-from .models import Product, Collection
-from .Utils import fetch
-
-
-class ProductType(DjangoObjectType):
-    class Meta:
-        model = Product
-
-
-class CollectionType(DjangoObjectType):
-    class Meta:
-        model = Collection
+from ..models import Product, Collection
+from .Types import ProductType, CollectionType
 
 
 class Query(ObjectType):
@@ -21,16 +13,13 @@ class Query(ObjectType):
     collections = graphene.List(CollectionType)
 
     def resolve_product(self, info, **kwargs):
-        return fetch(kwargs.get('id'), Product)
+        return fetch_by_id(kwargs.get('id'), Product)
 
     def resolve_collection(self, info, **kwargs):
-        return fetch(kwargs.get('id'), Collection)
+        return fetch_by_id(kwargs.get('id'), Collection)
 
     def resolve_products(self, info, **kwargs):
-        print("in fetch")
         return Product.objects.all()
 
     def resolve_collections(self, info, **kwargs):
         return Collection.objects.all()
-
-schema = graphene.Schema(query=Query)

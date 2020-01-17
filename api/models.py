@@ -1,7 +1,7 @@
 from django.db import models
-from .Utils import average
 
 class Product(models.Model):
+    objects = models.Manager()
     name = models.CharField(max_length=50)
     description = models.TextField()
     supplier_name = models.CharField(max_length=50)
@@ -16,8 +16,9 @@ class Product(models.Model):
 
 
 class Collection(models.Model):
+    objects = models.Manager()
     name = models.CharField(max_length=50)
-    products = models.ManyToManyField('Product', related_name='products')
+    products = models.ManyToManyField(Product, related_name='collections')
     average_products_price = models.FloatField()
 
     def __str__(self):
