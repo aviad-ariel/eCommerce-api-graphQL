@@ -19,7 +19,6 @@ class Collection(models.Model):
     objects = models.Manager()
     name = models.CharField(max_length=50)
     products = models.ManyToManyField(Product, related_name='collections')
-    average_products_price = models.FloatField()
 
     def __str__(self):
         return self.name
