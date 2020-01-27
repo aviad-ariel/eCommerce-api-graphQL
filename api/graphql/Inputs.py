@@ -15,3 +15,10 @@ class CollectionInput(graphene.InputObjectType):
     id = graphene.ID()
     name = graphene.String()
     products = graphene.List(ProductInput)
+
+
+class UserAddressInput(graphene.InputObjectType):
+    country = graphene.String()
+    state = graphene.String()
+    city = graphene.String()
+    street_name = graphene.String()

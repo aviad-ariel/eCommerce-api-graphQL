@@ -1,0 +1,4 @@
+/ecommerce/db.sqlite3
+/ecommerce/api/__pycache__
+/ecommerce/ecommerce/__pycache__
+/ecommerce/api/graphql/Mutations/__pycache__

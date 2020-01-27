@@ -1,18 +1,22 @@
-from ...models import Collection, Product
-from ..Types import CollectionType, ProductType
+from ...models import Collection, Product, User
+from ..Types import CollectionType, ProductType, UserType
 from ..Inputs import CollectionInput, ProductInput
 import graphene
+from graphql_jwt.decorators import login_required
 
 
 class CreateCollection(graphene.Mutation):
     class Arguments:
         input = CollectionInput()
+        token = graphene.String(required=True)
 
     ok = graphene.Boolean()
     collection = graphene.Field(CollectionType)
     not_found = graphene.List(graphene.Int)
-    @staticmethod
-    def mutate(root, info, input=None):
+
+    @classmethod
+    @login_required
+    def mutate(cls, root, info, input=None):
         ok = True
         products = []
         if input.products:
@@ -31,6 +35,8 @@ class CreateCollection(graphene.Mutation):
 # updates the products field on given collection.
 # in order to add product provide collection id and product id,
 # to remove product set remove argument to true.
+
+
 class UpdateCollectionProduct(graphene.Mutation):
     class Arguments:
         id = graphene.Int()
@@ -41,9 +47,10 @@ class UpdateCollectionProduct(graphene.Mutation):
     collection = graphene.Field(CollectionType)
 
     @staticmethod
-    def mutate(root, info, id, input, **kwargs):
+    @login_required
+    def mutate(root, info, input, **kwargs):
         ok = False
-        collection = Collection.objects.get(pk=id)
+        collection = Collection.objects.get(pk=kwargs.get('id'))
         if collection:
             ok = True
             collection.products.remove(input.id) if kwargs.get(
